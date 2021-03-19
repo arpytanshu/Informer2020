@@ -107,7 +107,7 @@ class Dataset_ETT_hour(Dataset):
     def _std(self, vals):
         # expected shape for vals R[len_seq x num_seq]
         loc_ = vals.mean(axis=0)
-        scale_ = vals.mean(axis=0)
+        scale_ = vals.std(axis=0)
         vals = (vals - loc_) / (scale_ + 1e-6)
         return vals, {'loc':loc_, 'scale':scale_}
     
