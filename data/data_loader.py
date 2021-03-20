@@ -36,7 +36,7 @@ class Dataset_ETT_hour(Dataset):
         self.scale = scale
         self.timeenc = timeenc
         self.freq = freq
-        self.denorm_parms = denorm_params
+        self.denorm_params = denorm_params
 
         self.root_path = root_path
         self.data_path = data_path
@@ -58,12 +58,12 @@ class Dataset_ETT_hour(Dataset):
         elif self.features=='S':
             df_data = df_raw[[self.target]]
 
-        if self.scale:
-            train_data = df_data[border1s[0]:border2s[0]]
-            self.scaler.fit(train_data.values)
-            data = self.scaler.transform(df_data.values)
-        else:
-            data = df_data.values
+        # if self.scale:
+        #     train_data = df_data[border1s[0]:border2s[0]]
+        #     self.scaler.fit(train_data.values)
+        #     data = self.scaler.transform(df_data.values)
+        # else:
+        data = df_data.values
             
         df_stamp = df_raw[['date']][border1:border2]
         df_stamp['date'] = pd.to_datetime(df_stamp.date)
@@ -93,7 +93,7 @@ class Dataset_ETT_hour(Dataset):
         seq_y_n = self._std_sample(seq_y, p)
         seq_x_mark = self.data_stamp[s_begin:s_end]
         seq_y_mark = self.data_stamp[r_begin:r_end]
-        if self.denorm_parms:
+        if self.denorm_params:
             return seq_x_n, seq_y_n, seq_x_mark, seq_y_mark, p
         else:
             return seq_x_n, seq_y_n, seq_x_mark, seq_y_mark
